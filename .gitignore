@@ -137,3 +137,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Original Text Files from Have I Been Pwnd
+pwn*.txt
+
+# sqlite db
+sqlite/*
