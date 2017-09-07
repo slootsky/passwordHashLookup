@@ -31,8 +31,9 @@ def dbLookup(hash):
                   
     
 
-parser=argparse.ArgumentParser()
-parser.add_argument('-v','--verbose', action="store_true")
+parser=argparse.ArgumentParser(description="Hash a password and then look it up in database of hashes", epilog="This utility can be used to test passwords against the database of hashes released by Troy Hunt/haveibeenpwnd.  The code is being released in a completely transparent manner to prove that the passwords are not being sent anywhere.")
+parser.add_argument('-p','--password', help="Password to check.  If not supplied, the user will be prompted for a password to check.")
+parser.add_argument('-v','--verbose', action="store_true", help="Show the password on screen.  Password will NOT be shown during execution without this option")
 args=parser.parse_args()
 
 conn = sqlite3.connect('sqlite/pwned-passwords.db')
@@ -41,13 +42,16 @@ conn = sqlite3.connect('sqlite/pwned-passwords.db')
 #pwd=u'pAssw0rd'
 #pwd=u'password'
 
-if args.verbose :
-	pwd = raw_input("What is your best password?")
+if args.password is None:
+	if args.verbose :
+		pwd = raw_input("What is your best password?")
+	else:
+		print "What is your best password?",
+		pwd = getpwd()
+		print ""
 else:
-	print "What is your best password?",
-	pwd = getpwd()
-	print ""
-
+	pwd=args.password
+		
 pwd=pwd.decode(sys.stdin.encoding or locale.getpreferredencoding(True))	
 
 sha1 = hashlib.sha1()
