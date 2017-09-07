@@ -143,3 +143,5 @@ pwn*.txt
 
 # sqlite db
 sqlite/*
+sqlite.zip
+sqlite.7z*
